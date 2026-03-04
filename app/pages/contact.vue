@@ -6,12 +6,7 @@
         <h1>Contact Form</h1>
       </div>
 
-      <form
-        name="contact"
-        method="POST"
-        data-netlify="true"
-        class="contact-form"
-      >
+      <form name="contact" method="POST" class="contact-form" netlify>
         <div class="form-group">
           <label for="username">Name: </label>
 
