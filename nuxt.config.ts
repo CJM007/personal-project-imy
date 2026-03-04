@@ -13,9 +13,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-  nitro: {
-    preset: "netlify",
-  },
   runtimeConfig: {
     githubToken: process.env.NUXT_GITHUB_TOKEN,
     historyApiId: process.env.NUXT_HISTORY_API_ID,
