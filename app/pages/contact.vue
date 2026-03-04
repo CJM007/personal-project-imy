@@ -8,8 +8,7 @@
 
       <form
         name="contact"
-        method="POST"
-        action="/"
+        @submit.prevent="handleSubmit"
         data-netlify="true"
         netlify-honeypot="bot-field"
         class="contact-form"
@@ -61,6 +60,25 @@
     </div>
   </div>
 </template>
+
+<script setup>
+const handleSubmit = async (event) => {
+  const form = event.target;
+  const formData = new FormData(form);
+
+  try {
+    await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData).toString(),
+    });
+    alert("Success! Message sent.");
+    form.reset();
+  } catch (error) {
+    alert("Error: " + error);
+  }
+};
+</script>
 
 <style scoped>
 * {
