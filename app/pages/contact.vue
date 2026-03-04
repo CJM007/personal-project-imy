@@ -6,19 +6,27 @@
         <h1>Contact Form</h1>
       </div>
 
-      <form name="contact" method="POST" class="contact-form" netlify>
+      <form
+        name="contact"
+        method="POST"
+        class="contact-form"
+        netlify
+        @submit.prevent="handleSubmit"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+
         <div class="form-group">
           <label for="username">Name: </label>
-
-          <input type="hidden" name="form-name" value="contact" />
-
           <input
             type="text"
             name="name"
             id="username"
             placeholder="Enter Name"
+            v-model="formData.name"
+            required
           />
         </div>
+
         <div class="form-group">
           <label for="email">Email: </label>
           <input
@@ -26,24 +34,89 @@
             name="email"
             id="email"
             placeholder="your.email@example.com"
+            v-model="formData.email"
+            required
           />
         </div>
+
         <div class="form-group">
           <label for="message">Message: </label>
-
           <textarea
             name="message"
             id="message"
             rows="5"
             placeholder="Your message"
+            v-model="formData.message"
+            required
           ></textarea>
         </div>
 
-        <button type="submit" class="submit-button">Send</button>
+        <button type="submit" class="submit-button" :disabled="submitting">
+          {{ submitting ? "Sending..." : "Send" }}
+        </button>
+
+        <div v-if="formStatus" :class="['form-status', formStatus.type]">
+          {{ formStatus.message }}
+        </div>
       </form>
     </div>
   </div>
 </template>
+
+<script setup>
+import { reactive, ref } from "vue";
+
+const formData = reactive({
+  name: "",
+  email: "",
+  message: "",
+});
+
+const submitting = ref(false);
+const formStatus = ref(null);
+
+const handleSubmit = async () => {
+  submitting.value = true;
+  formStatus.value = null;
+
+  const formDataToSend = new FormData();
+  formDataToSend.append("form-name", "contact");
+  formDataToSend.append("name", formData.name);
+  formDataToSend.append("email", formData.email);
+  formDataToSend.append("message", formData.message);
+
+  try {
+    const response = await fetch("/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams(formDataToSend).toString(),
+    });
+
+    if (response.ok) {
+      formData.name = "";
+      formData.email = "";
+      formData.message = "";
+
+      formStatus.value = {
+        type: "success",
+        message: "Thank you! Your message has been sent.",
+      };
+    } else {
+      throw new Error("Form submission failed");
+    }
+  } catch (error) {
+    console.error("Form submission error:", error);
+    formStatus.value = {
+      type: "error",
+      message: "Something went wrong.",
+    };
+  } finally {
+    submitting.value = false;
+  }
+};
+</script>
 
 <style scoped>
 * {
@@ -53,6 +126,7 @@
   font-style: normal;
   font-variation-settings: "wdth" 100;
 }
+
 .contact-container {
   max-width: 600px;
   margin: 0 auto;
@@ -139,5 +213,30 @@
 
 .submit-button:active {
   transform: translateY(1px);
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.form-status {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.form-status.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-status.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 </style>
