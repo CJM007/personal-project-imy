@@ -10,6 +10,8 @@
         <div class="form-group">
           <label for="username">Name: </label>
 
+          <input type="hidden" name="form-name" value="contact" />
+
           <input
             type="text"
             name="name"
