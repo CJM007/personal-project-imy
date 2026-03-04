@@ -9,6 +9,7 @@
       <form
         name="contact"
         method="POST"
+        action="/"
         data-netlify="true"
         netlify-honeypot="bot-field"
         class="contact-form"
@@ -94,7 +95,7 @@ const handleSubmit = async () => {
   formDataToSend.append("message", formData.message);
 
   try {
-    const response = await fetch("/", {
+    const response = await fetch(window.location.pathname, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
