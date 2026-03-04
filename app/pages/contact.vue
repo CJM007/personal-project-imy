@@ -9,11 +9,19 @@
       <form
         name="contact"
         method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
         class="contact-form"
-        netlify
         @submit.prevent="handleSubmit"
       >
         <input type="hidden" name="form-name" value="contact" />
+
+        <p hidden>
+          <label>
+            Don’t fill this out:
+            <input name="bot-field" />
+          </label>
+        </p>
 
         <div class="form-group">
           <label for="username">Name: </label>
