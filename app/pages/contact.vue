@@ -9,10 +9,10 @@
       <form
         name="contact"
         method="POST"
+        action="/"
         data-netlify="true"
         netlify-honeypot="bot-field"
         class="contact-form"
-        @submit.prevent="handleSubmit"
       >
         <input type="hidden" name="form-name" value="contact" />
 
@@ -30,7 +30,6 @@
             name="name"
             id="username"
             placeholder="Enter Name"
-            v-model="formData.name"
             required
           />
         </div>
@@ -42,7 +41,6 @@
             name="email"
             id="email"
             placeholder="your.email@example.com"
-            v-model="formData.email"
             required
           />
         </div>
@@ -54,82 +52,15 @@
             id="message"
             rows="5"
             placeholder="Your message"
-            v-model="formData.message"
             required
           ></textarea>
         </div>
 
-        <button type="submit" class="submit-button" :disabled="submitting">
-          {{ submitting ? "Sending..." : "Send" }}
-        </button>
-
-        <div v-if="formStatus" :class="['form-status', formStatus.type]">
-          {{ formStatus.message }}
-        </div>
+        <button type="submit" class="submit-button">Send</button>
       </form>
     </div>
   </div>
 </template>
-
-<script setup>
-import { reactive, ref } from "vue";
-
-const formData = reactive({
-  name: "",
-  email: "",
-  message: "",
-});
-
-const submitting = ref(false);
-const formStatus = ref(null);
-
-const handleSubmit = async () => {
-  submitting.value = true;
-  formStatus.value = null;
-
-  const formDataToSend = new FormData();
-  formDataToSend.append("form-name", "contact");
-  formDataToSend.append("name", formData.name);
-  formDataToSend.append("email", formData.email);
-  formDataToSend.append("message", formData.message);
-
-  try {
-    const response = await fetch("/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        "form-name": "contact",
-        name: formData.name,
-        email: formData.email,
-        message: formData.message,
-      }).toString(),
-    });
-
-    if (response.ok) {
-      formData.name = "";
-      formData.email = "";
-      formData.message = "";
-
-      formStatus.value = {
-        type: "success",
-        message: "Thank you! Your message has been sent.",
-      };
-    } else {
-      throw new Error("Form submission failed");
-    }
-  } catch (error) {
-    console.error("Form submission error:", error);
-    formStatus.value = {
-      type: "error",
-      message: "Something went wrong.",
-    };
-  } finally {
-    submitting.value = false;
-  }
-};
-</script>
 
 <style scoped>
 * {
