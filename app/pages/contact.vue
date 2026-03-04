@@ -99,7 +99,12 @@ const handleSubmit = async () => {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: new URLSearchParams(formDataToSend).toString(),
+      body: new URLSearchParams({
+        "form-name": "contact",
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      }).toString(),
     });
 
     if (response.ok) {
