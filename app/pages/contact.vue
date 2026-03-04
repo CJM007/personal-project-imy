@@ -10,6 +10,7 @@
         name="contact"
         @submit.prevent="handleSubmit"
         data-netlify="true"
+        action="/favicon.ico"
         netlify-honeypot="bot-field"
         class="contact-form"
       >
@@ -67,7 +68,7 @@ const handleSubmit = async (event) => {
   const formData = new FormData(form);
 
   try {
-    await fetch("/", {
+    await fetch("/favicon.ico", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(formData).toString(),
