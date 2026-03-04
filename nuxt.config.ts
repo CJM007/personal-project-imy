@@ -18,4 +18,7 @@ export default defineNuxtConfig({
     historyApiId: process.env.NUXT_HISTORY_API_ID,
     historyApiKey: process.env.NUXT_HISTORY_API_KEY,
   },
+  routeRules: {
+    "/contact": { prerender: true },
+  },
 });
