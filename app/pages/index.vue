@@ -78,6 +78,11 @@
       </div>
     </div>
     <div class="history-section">
+      <div class="header">
+        <h2>
+          <span class="onthisday"> On This Day Fact </span>
+        </h2>
+      </div>
       <div class="header-box">
         <h2>
           <i class="fa fa-history" aria-hidden="true"></i>
@@ -154,7 +159,8 @@ h3,
 p,
 ul,
 li,
-span {
+span,
+.bio {
   font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
@@ -168,14 +174,14 @@ span {
   justify-content: center;
   gap: 45px;
   padding: 20px;
-  margin-top: 45px;
+  margin-top: 60px;
 }
 
 .img-container img {
   width: 100%;
   max-width: 300px;
   display: block;
-  height: auto;
+  height: 400px;
   margin: 0 auto 10px;
   border-radius: 5px;
 }
@@ -218,6 +224,22 @@ span {
   max-width: 1200px;
   margin: 60px auto;
   padding: 0 20px;
+}
+
+.onthisday {
+  text-decoration: underline;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 60px;
+}
+
+.header h2 {
+  font-size: 35px;
+  color: #000;
+  font-weight: 650;
 }
 
 .header-box {

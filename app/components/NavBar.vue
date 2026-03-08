@@ -37,13 +37,15 @@ nav {
   justify-content: center;
   width: 100%;
   margin-top: 25px;
+  padding: 2px;
+  box-shadow: 2px 2px 10px rgba(91, 203, 255, 0.5);
 }
 
 nav ul {
   display: flex;
   gap: 50px;
   list-style: none;
-  padding: 0px;
+  padding: 5px;
   margin: 0px;
 }
 
